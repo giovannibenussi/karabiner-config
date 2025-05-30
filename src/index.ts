@@ -1,32 +1,40 @@
 import {
+  duoLayer,
+  ifVar,
   layer,
   map,
+  mapSimultaneous,
   NumberKeyValue,
   rule,
   withMapper,
   writeToProfile,
-} from 'karabiner.ts'
+} from "karabiner.ts";
 
-// ! Change '--dry-run' to your Karabiner-Elements Profile name.
-// (--dry-run print the config json into console)
-// + Create a new profile if needed.
-writeToProfile('--dry-run', [
-  // It is not required, but recommended to put symbol alias to layers,
-  // (If you type fast, use simlayer instead, see https://evan-liu.github.io/karabiner.ts/rules/simlayer)
-  // to make it easier to write '←' instead of 'left_arrow'.
-  // Supported alias: https://github.com/evan-liu/karabiner.ts/blob/main/src/utils/key-alias.ts
-  layer('/', 'symbol-mode').manipulators([
+writeToProfile("Default profile", [
+  layer("/", "symbol-mode").manipulators([
     //     / + [ 1    2    3    4    5 ] =>
-    withMapper(['⌘', '⌥', '⌃', '⇧', '⇪'])((k, i) =>
+    withMapper(["⌘", "⌥", "⌃", "⇧", "⇪"])((k, i) =>
       map((i + 1) as NumberKeyValue).toPaste(k),
     ),
-    withMapper(['←', '→', '↑', '↓', '␣', '⏎', '⇥', '⎋', '⌫', '⌦', '⇪'])((k) =>
+    withMapper(["←", "→", "↑", "↓", "␣", "⏎", "⇥", "⎋", "⌫", "⌦", "⇪"])((k) =>
       map(k).toPaste(k),
     ),
   ]),
-
-  rule('Key mapping').manipulators([
-    // config key mappings
-    map(1).to(1)
+  rule("asd -> left_cmd + tab").manipulators([
+    mapSimultaneous(["a", "s", "d"]).to("tab", "left_command"),
   ]),
-])
+  rule("as -> left_ctrl + left_shift + tab").manipulators([
+    mapSimultaneous(["a", "s"]).to("tab", ["left_control", "left_shift"]),
+  ]),
+  rule("sd -> left_ctrl + tab").manipulators([
+    mapSimultaneous(["s", "d"]).to("tab", "left_control"),
+  ]),
+  layer("caps_lock", "Caps Lock Layer").manipulators([
+    // Preserve behavior for these keys
+    withMapper(["d", "u", "w", "e", "s", "y"])((k) =>
+      map(k).to(k, "left_control"),
+    ),
+    map("j").to("slash", "left_shift"),
+    map("m").to("slash"),
+  ]),
+]);
