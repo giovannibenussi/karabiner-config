@@ -31,10 +31,18 @@ writeToProfile("Default profile", [
   ]),
   layer("caps_lock", "Caps Lock Layer").manipulators([
     // Preserve behavior for these keys
-    withMapper(["d", "u", "w", "e", "s", "y"])((k) =>
+    withMapper(["d", "u", "w", "e", "s", "y", "r"])((k) =>
       map(k).to(k, "left_control"),
     ),
-    map("j").to("slash", "left_shift"),
+
+    // Vim-like navigation
+    // Vim-like navigation
+    map("h").to("left_arrow"),
+    map("j").to("down_arrow"),
+    map("k").to("up_arrow"),
+    map("l").to("right_arrow"),
+
+    map("n").to("slash", "left_shift"),
     map("m").to("slash"),
   ]),
 ]);
