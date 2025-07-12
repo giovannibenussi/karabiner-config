@@ -26,6 +26,8 @@ writeToProfile("Default profile", [
     map("caps_lock").to("left_control"),
   ]),
 
+  layer("v", "v Layer").manipulators([map("l", { optional: "⇧" }).to("quote")]),
+
   rule("Letter to Modifiers").manipulators([
     map("a").to("left_command").toIfAlone("a"),
     map("s").to("left_control").toIfAlone("s"),
@@ -35,6 +37,10 @@ writeToProfile("Default profile", [
     map("j").to("left_shift").toIfAlone("j"),
     map("k").to("left_control").toIfAlone("k"),
     map("l").to("left_option").toIfAlone("l"),
-    map("semicolon").to("left_command").toIfAlone("semicolon"),
+    map("semicolon").toIfAlone("delete_or_backspace"),
+    map({
+      key_code: "semicolon",
+      modifiers: { mandatory: ["left_control"] },
+    }).to("semicolon"),
   ]),
 ]);
